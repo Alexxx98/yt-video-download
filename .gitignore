@@ -1,2 +1,3 @@
 # Ignore virtual envoirement
 /venv
+/__pycache__
