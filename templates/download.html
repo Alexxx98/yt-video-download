@@ -5,6 +5,8 @@
         <br/>
         <iframe src="{{ link }}" width="600px" height="360px" allowfullscreen></iframe>
         <br/>
-        <button type="submit" class="btn btn-secondary" id="download-button">Download</button>
+        <form action="/download" method="POST"></form>
+            <button type="submit" class="btn btn-secondary" id="btn">Download</button>
+        </form>
     </div>
 {% endblock %}

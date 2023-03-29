@@ -6,6 +6,10 @@
     width: 500px;
 }
 
-#download-button {
+#btn {
     width: 150px;
+}
+
+#msg {
+    text-align: center;
 }

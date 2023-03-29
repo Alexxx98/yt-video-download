@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from pytube import YouTube
-import os
+from downloader import download_video
+import os, json
 
 
 PHOTO_FOLDER = os.path.join("static", "images")
@@ -16,16 +17,19 @@ def home():
 
     if request.method == 'POST':
         session['link'] = request.form.get('url')
-        link = request.form.get('url')
-        link = link.replace("https://youtu.be", "https://youtube.com/embed")
-        url = YouTube(session['link'])
-        return render_template('download.html', url=url, link=link)
+        try:
+            url = YouTube(session['link'])
+            url.check_availability()
+        except:
+            flash("Wrong URL!", category="danger")
+            return render_template('home.html', youtube_logo=yt_logo)
+        download_video(url)
+        flash("Download Successful!")
     return render_template('home.html', youtube_logo=yt_logo)
 
 @app.route('/download', methods=['POST', 'GET'])
 def download():
-    download_logo = os.path.join(PHOTO_FOLDER, "download-icon.png")
-    return render_template('download.html', download_logo=download_logo)
+    pass
 
 if __name__ == "__main__":
     app.run(host="192.168.1.11", port=8080, debug=True)
