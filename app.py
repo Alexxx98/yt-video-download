@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask import Flask, render_template, request, session, flash, redirect, send_file, url_for
 from pytube import YouTube
-from downloader import download_video
-import os, json
+from io import BytesIO
+import os
 
 
 PHOTO_FOLDER = os.path.join("static", "images")
@@ -21,15 +21,24 @@ def home():
             url = YouTube(session['link'])
             url.check_availability()
         except:
-            flash("Wrong URL!", category="danger")
+            flash("Wrong URL!", category='danger')
             return render_template('home.html', youtube_logo=yt_logo)
-        download_video(url)
-        flash("Download Successful!")
+        return render_template('download.html', url=url, youtube_logo = yt_logo)
     return render_template('home.html', youtube_logo=yt_logo)
 
 @app.route('/download', methods=['POST', 'GET'])
 def download():
-    pass
+
+    if request.method == 'POST':
+        url = YouTube(session['link'])
+        buffer = BytesIO()
+        itag = request.form.get('resolution')
+        video = url.streams.get_by_itag(itag)
+        video.stream_to_buffer(buffer)
+        buffer.seek(0)
+        return send_file(buffer, as_attachment=True, download_name=f'{url.title}.mp4', mimetype='video/mp4'), flash("Download Successful!", category='success')
+
+    return redirect(url_for('home'))
 
 if __name__ == "__main__":
     app.run(host="192.168.1.11", port=8080, debug=True)

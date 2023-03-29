@@ -3,7 +3,7 @@
 }
 
 #url {
-    width: 500px;
+    width: 750px;
 }
 
 #btn {
@@ -12,4 +12,11 @@
 
 #msg {
     text-align: center;
+}
+
+#res {
+    text-align: center;
+    height: 36px;
+    width: 150px;
+    border-width: 5;
 }
