@@ -8,8 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY . /usr/src/app/
 
-EXPOSE 8080
-
-VOLUME ["/yt-downloader"]
-
-CMD ["python", "app.py"]
+CMD FLASK_APP=app python -m flask run --host=0.0.0.0
