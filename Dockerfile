@@ -10,4 +10,6 @@ COPY . /usr/src/app/
 
 EXPOSE 8080
 
+VOLUME ["/yt-downloader"]
+
 CMD ["python", "app.py"]
