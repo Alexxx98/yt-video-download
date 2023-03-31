@@ -27,4 +27,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: aleksanderdocker/yt-downloader:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/yt-downloader:latest
