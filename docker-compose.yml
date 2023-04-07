@@ -2,4 +2,7 @@ version: '3'
 
 services:
   app:
-    image: ${{ secrets.DOCKERHUB_USERNAME }}/yt-downloader:latest
+    image: aleksanderdocker/yt-downloader:latest
+    build: .
+    ports:
+      - "80:5000"
