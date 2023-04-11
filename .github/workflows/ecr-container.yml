@@ -3,7 +3,7 @@ name: update-ecr-repo
 on: [push]
 
 jobs:
-  ecr:
+  build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
