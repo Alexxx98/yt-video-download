@@ -15,7 +15,16 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-central-1
     
-    - name: Login to Amazn ECR
+    - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Buld and push image
+      env:
+        ECR_REGISTRY: ${{ seps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: yt-downloader
+        IMAGE_TAG: yt-downloader
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
